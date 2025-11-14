@@ -1,18 +1,5 @@
 version: "3.8"
 services:
-  postgres:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: template_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      retries: 5
-    ports:
-      - "5432:5432"
-
   rabbitmq:
     image: rabbitmq:3.11-management
     environment:
@@ -31,10 +18,9 @@ services:
     build: .
     env_file: .env
     environment:
-      DATABASE_URL: postgres://postgres:postgres@postgres:5432/template_db
+      # Remove DATABASE_URL entirely (SQLite does not need it)
       RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672/
     depends_on:
-      - postgres
       - rabbitmq
       - redis
     ports:

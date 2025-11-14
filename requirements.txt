@@ -3,3 +3,5 @@ djangorestframework
 psycopg[binary]
 gunicorn
 jinja2
+drf-yasg
+
